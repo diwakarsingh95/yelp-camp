@@ -29,7 +29,6 @@ const createCampground = async (req, res) => {
   }))
   campground.author = req.user._id
   await campground.save()
-  console.log(campground)
   req.flash('success', 'Successfully created a new campground.')
   res.redirect(`/campgrounds/${campground._id}`)
 }
@@ -87,7 +86,10 @@ const updateCampground = async (req, res) => {
 
 const deleteCampground = async (req, res) => {
   const { id } = req.params
-  await Campground.findByIdAndDelete(id)
+  const deletedCampground = await Campground.findByIdAndDelete(id)
+  for (let img of deletedCampground.images) {
+    await cloudinary.uploader.destroy(img.filename)
+  }
   req.flash('success', 'Successfully deleted campground.')
   res.redirect('/campgrounds')
 }
