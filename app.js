@@ -13,14 +13,16 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const mongoSanitize = require('express-mongo-sanitize')
 const helmet = require('helmet')
+const MongoStore = require('connect-mongo')
 const User = require('./models/user')
 const ExpressError = require('./utils/ExpressError')
 const usersRouter = require('./routes/users')
 const campgroundsRouter = require('./routes/campgrounds')
 const reviewsRouter = require('./routes/reviews')
 
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp'
 mongoose
-  .connect('mongodb://localhost:27017/yelp-camp')
+  .connect(dbUrl)
   .then(() => {
     console.log('DB CONNECTED!!!')
   })
@@ -44,9 +46,20 @@ app.use(
   })
 )
 
+const secret = process.env.SECRET || 'This is a secret!'
+
+const sessionStore = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 3600,
+  crypto: {
+    secret
+  }
+})
+
 const sessionConfig = {
+  store: sessionStore,
   name: 'session',
-  secret: 'This is a secret!',
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -137,6 +150,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render('error', { err })
 })
 
-app.listen(3000, () => {
-  console.log('Serving on port 3000')
+const port = process.env.PORT || 3000
+app.listen(port, () => {
+  console.log('Serving on port ', port)
 })
