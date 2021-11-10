@@ -65,13 +65,13 @@
       <div class="card-footer text-muted">2 days ago</div>
     </div>
   </div>
-  <div class="col-md-6 mt-2 mt-md-0">
-    <div id="map"></div>
+  <div class="col-md-6 mt-3 mt-md-0">
+    <div id="map" class="mb-2"></div>
     <% if (currentUser) { %>
-    <h2 class="h3 mt-2">Leave a Review</h2>
+    <h2 class="h3">Leave a Review</h2>
     <form
       action="/campgrounds/<%= campground._id %>/reviews"
-      class="mb-3 validated-form"
+      class="validated-form"
       method="POST"
       novalidate
     >
@@ -111,7 +111,7 @@
       <button class="btn btn-sm btn-success">Submit</button>
     </form>
     <% } %> <% for(let review of campground.reviews) { %>
-    <div class="card mb-3">
+    <div class="card mt-2">
       <div class="card-body">
         <h5 class="card-title"><%= review.author.username %></h5>
         <p class="starability-result" data-rating="<%= review.rating %>">
