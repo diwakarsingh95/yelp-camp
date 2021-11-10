@@ -9,15 +9,15 @@
       <div class="col-md-4">
         <%if(camp.images.length) {%>
         <img
-          class="img-fluid"
-          alt=""
+          class="d-block w-100 preview-image"
+          alt="<%= camp.title %>"
           src="<%= camp.images[Math.floor(Math.random() * camp.images.length)].url %>"
         />
         <% }else {%>
         <img
-          class="img-fluid"
+          class="d-block w-100 preview-image"
           alt=""
-          src="https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/YelpCamp/lz8jjv2gyynjil7lswf4.png"
+          src="https://res.cloudinary.com/dykjsx7mz/image/upload/v1636524312/YelpCamp/joczirdi5c4nbhl4h1s4.png"
         />
         <% } %>
       </div>
