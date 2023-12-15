@@ -108,7 +108,7 @@ app.use(
       scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
       styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
       workerSrc: ["'self'", "blob:"],
-      objectSrc: [],
+      objectSrc: ['none'],
       imgSrc: [
         "'self'",
         "blob:",
