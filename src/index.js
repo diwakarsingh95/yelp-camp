@@ -137,10 +137,6 @@ app.use("/", usersRouter);
 app.use("/campgrounds", campgroundsRouter);
 app.use("/campgrounds/:id/reviews", reviewsRouter);
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
