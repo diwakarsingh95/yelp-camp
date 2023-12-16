@@ -82,7 +82,10 @@
 
     <!-- Mapbox Script -->
     <% if (!authPage) { %>
-    <script defer src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"></script>
+    <script
+      defer
+      src="https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js"
+    ></script>
     <% } %>
   </head>
 
@@ -92,6 +95,42 @@
       <% include ../partials/flash %> <%- body -%>
     </main>
     <% include ../partials/footer %>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        function setupEvent(eventType, setupFunction) {
+          document.addEventListener(eventType, function (event) {
+            setupFunction.call(
+              this,
+              event,
+              event.namespace,
+              event.handleObj.handler
+            );
+          });
+        }
+
+        setupEvent("touchstart", function (_, ns, handle) {
+          this.addEventListener("touchstart", handle, {
+            passive: !ns.includes("noPreventDefault"),
+          });
+        });
+
+        setupEvent("touchmove", function (_, ns, handle) {
+          this.addEventListener("touchmove", handle, {
+            passive: !ns.includes("noPreventDefault"),
+          });
+        });
+
+        setupEvent("wheel", function (_, ns, handle) {
+          this.addEventListener("wheel", handle, { passive: true });
+        });
+
+        setupEvent("mousewheel", function (_, ns, handle) {
+          this.addEventListener("mousewheel", handle, { passive: true });
+        });
+      });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script src="/js/validateForms.js"></script>
