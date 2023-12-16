@@ -1,7 +1,7 @@
 const User = require("../models/user");
 
 const registerForm = (req, res) => {
-  res.render("users/register");
+  res.render("users/register", { authPage: true });
 };
 
 const register = async (req, res) => {
@@ -21,7 +21,7 @@ const register = async (req, res) => {
 };
 
 const loginForm = (req, res) => {
-  res.render("users/login");
+  res.render("users/login", { authPage: true });
 };
 
 const login = (req, res) => {
