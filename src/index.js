@@ -21,15 +21,20 @@ const usersRouter = require("./routes/users");
 const campgroundsRouter = require("./routes/campgrounds");
 const reviewsRouter = require("./routes/reviews");
 
+const port = process.env.PORT || 3000;
+
 const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
 mongoose.set("strictQuery", false);
 mongoose
   .connect(dbUrl)
   .then(() => {
     console.log("MongoDB Connected");
+    app.listen(port, () => {
+      console.log("Server running on port", port);
+    });
   })
   .catch((err) => {
-    console.error("MongoDB Connected Error");
+    console.error("MongoDB Connection Error");
     console.error(err);
   });
 
@@ -154,7 +159,3 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log("Server running on port", port);
-});
